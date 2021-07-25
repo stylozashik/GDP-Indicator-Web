@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+{% if  searched %}
+    {% for i in gdp_growth %}
+        
+            <div class="alert alert-success" role="alert">
+                Search result found for the year of <strong>{{ searched }}
+            </div>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">GDP growth(%)</th>
+                    <th scope="col">Signal</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>{{ i.year }}</td>
+                        <td>{{ i.gdp_growth|floatformat:2 }} %</td>
+        
+                        {% if i.gdp_growth > 9 %}
+                        <td>
+                            <span class="badge bg-success text-light">||||</span>
+                        </td>   
+                        {% elif i.gdp_growth > 8 %}
+                        <td>
+                            <span class="badge bg-primary text-light">|||</span>
+                        </td>   
+                        {% elif i.gdp_growth > 7 %}
+                        <td>
+                            <span class="badge bg-warning text-light">||</span>
+                        </td>   
+                        {% else %}
+                        <td>
+                            <span class="badge bg-danger text-light">|</span>
+                        </td> 
+                        {% endif %}
+        
+                    </tr>
+                </tbody>    
+            </table>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-danger" role="alert">
+        Your search input need to be within <strong>(1960-2050)</strong>
+    </div>
+{% endif %}
+{% endblock %}
